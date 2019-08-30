@@ -7,9 +7,9 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - name: irc
-        users: rectalogic/actions/notify-irc@master
+        uses: rectalogic/actions/notify-irc@master
         with:
-          channel: #cursec
+          channel: "#cursec"
           nickname: ghn-test
           message: ${{ toJson(github) }}
       - name: Test container
