@@ -1,0 +1,12 @@
+name: testing
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Test container
+        uses: ./myaction
+        with:
+          myInput: hello
