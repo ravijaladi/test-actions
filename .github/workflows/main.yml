@@ -15,4 +15,4 @@ jobs:
       - name: Test container
         uses: rectalogic/test-actions/.github/actions/myaction@master
         with:
-          myInput: hello
+          myInput: push ${{ toJSON(github) }}
