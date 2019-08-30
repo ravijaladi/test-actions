@@ -6,13 +6,13 @@ jobs:
   test:
     runs-on: ubuntu-18.04
     steps:
+      - name: Test container
+        uses: rectalogic/test-actions/.github/actions/myaction@master
+        with:
+          myInput: push ${{ toJSON(github) }}
       - name: irc
         uses: rectalogic/actions/notify-irc@master
         with:
           channel: "#cursec"
           nickname: ghn-test
           message: Push ${{ github.event.push.url }}
-      - name: Test container
-        uses: rectalogic/test-actions/.github/actions/myaction@master
-        with:
-          myInput: push ${{ toJSON(github) }}
