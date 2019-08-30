@@ -7,6 +7,6 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - name: Test container
-        uses: ./myaction
+        uses: .github/actions/myaction
         with:
           myInput: hello
