@@ -11,7 +11,7 @@ jobs:
         with:
           channel: "#cursec"
           nickname: ghn-test
-          message: ${{ toJson(github) }}
+          message: Push ${{ github.event.push.url }}
       - name: Test container
         uses: rectalogic/test-actions/.github/actions/myaction@master
         with:
