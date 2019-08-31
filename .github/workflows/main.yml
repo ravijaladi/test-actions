@@ -10,12 +10,28 @@ jobs:
         uses: rectalogic/test-actions/.github/actions/myaction@master
         with:
           myInput: push ${{ toJSON(github) }}
-      - name: irc
+      - name: irc push
         uses: rectalogic/actions/notify-irc@master
         if: github.event_name == 'push'
         with:
           channel: "#cursec"
           nickname: ghn-test
           message: |
-            ${{ github.actor }} pushed ${{ github.event.compare }}
+            ${{ github.actor }} pushed ${{ github.event.ref }} ${{ github.event.compare }}
             ${{ github.event.head_commit.message }}
+      - name: irc pull request
+        uses: rectalogic/actions/notify-irc@master
+        if: github.event_name == 'pull_request'
+        with:
+          channel: "#cursec"
+          nickname: ghn-test
+          message: |
+            ${{ github.actor }} opened PR ${{ github.event.html_url }}
+      - name: irc tag created
+        uses: rectalogic/actions/notify-irc@master
+        if: github.event_name == 'create' && github.event.ref_type == 'tag'
+        with:
+          channel: "#cursec"
+          nickname: ghn-test
+          message: |
+            ${{ github.actor }} tagged ${{ github.repository }} ${{ github.event.ref }}
