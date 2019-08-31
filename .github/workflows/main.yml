@@ -12,7 +12,10 @@ jobs:
           myInput: push ${{ toJSON(github) }}
       - name: irc
         uses: rectalogic/actions/notify-irc@master
+        if: github.event_name == 'push'
         with:
           channel: "#cursec"
           nickname: ghn-test
-          message: Push ${{ github.event.compare }}
+          message: |
+            ${{ github.actor }} pushed ${{ github.event.compare }}
+            ${{ github.event.head_commit.message }}
