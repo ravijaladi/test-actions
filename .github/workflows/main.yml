@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - name: Test container
-        uses: rectalogic/test-actions/.github/myaction@master
+        uses: rectalogic/test-actions/.github/actions/myaction@master
         with:
           myInput: push ${{ toJSON(github) }}
       - name: irc push
