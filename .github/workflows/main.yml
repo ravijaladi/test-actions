@@ -18,7 +18,7 @@ jobs:
           nickname: ghn-test
           message: |
             ${{ github.actor }} pushed ${{ github.event.ref }} ${{ github.event.compare }}
-            ${{ github.event.head_commit.message }}
+            ${{ join(github.event.commits.*.message) }}
       - name: irc pull request
         uses: rectalogic/notify-irc@master
         if: github.event_name == 'pull_request'
