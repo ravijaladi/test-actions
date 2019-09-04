@@ -6,32 +6,7 @@ jobs:
   test:
     runs-on: ubuntu-18.04
     steps:
-      - name: Test container
-        uses: rectalogic/test-actions/.github/actions/myaction@master
-        with:
-          myInput: push ${{ toJSON(github) }}
-      - name: irc push
-        uses: rectalogic/notify-irc@master
-        if: github.event_name == 'push'
-        with:
-          channel: "#cursec"
-          nickname: ghn-test
-          message: |
-            ${{ github.actor }} pushed ${{ github.event.ref }} ${{ github.event.compare }}
-            ${{ join(github.event.commits.*.message) }}
-      - name: irc pull request
-        uses: rectalogic/notify-irc@master
-        if: github.event_name == 'pull_request'
-        with:
-          channel: "#cursec"
-          nickname: ghn-test
-          message: |
-            ${{ github.actor }} opened PR ${{ github.event.html_url }}
-      - name: irc tag created
-        uses: rectalogic/notify-irc@master
-        if: github.event_name == 'create' && github.event.ref_type == 'tag'
-        with:
-          channel: "#cursec"
-          nickname: ghn-test
-          message: |
-            ${{ github.actor }} tagged ${{ github.repository }} ${{ github.event.ref }}
+      - name: Test host
+        run: |
+          env
+          apt list --installed
