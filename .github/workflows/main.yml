@@ -9,4 +9,7 @@ jobs:
       - name: Test host
         run: |
           env
-          apt list --installed
+          ls $ANDROID_HOME
+          find $ANDROID_HOME -name '*emu*'
+          find $ANDROID_HOME -name '*manag*'
+          #apt list --installed
