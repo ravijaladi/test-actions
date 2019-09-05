@@ -9,7 +9,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Script
-        uses: actions/github-script@v1
+        uses: actions/github-script@master
         with:
           script: |
             const { spawnSync } = require('child_process');
