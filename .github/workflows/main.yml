@@ -1,6 +1,6 @@
 name: testing
 
-on: [push, pull_request, create]
+on: [push]
 
 jobs:
   test:
@@ -8,10 +8,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Dump event
-        run: |
-          echo "${{ toJSON(github) }}"
-      - name: Extract tag
+      - name: Notify tag
+        #uses: rectalogic/notify-irc@v1
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
         run: |
           git for-each-ref ${{ github.ref }} --format='%(contents)'
+      - name: Dump step
+        run: echo "${{ toJSON(steps) }}"
