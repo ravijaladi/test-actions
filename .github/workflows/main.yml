@@ -6,10 +6,6 @@ jobs:
   test:
     runs-on: ubuntu-18.04
     steps:
-      - name: Test host
+      - name: Dump event
         run: |
-          env
-          ls $ANDROID_HOME
-          find $ANDROID_HOME -name '*emu*'
-          find $ANDROID_HOME -name '*manag*'
-          #apt list --installed
+          echo ${{ toJSON(github) }}
