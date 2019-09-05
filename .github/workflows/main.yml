@@ -8,10 +8,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Notify tag
+      - name: Script
+        uses: actions/github-script@v1
+        with:
+          script: |
+            const { spawnSync } = require('child_process');
+            spawnSync('git', ['for-each-ref', '${{ github.ref }}', '--format=%(contents)']);
         #uses: rectalogic/notify-irc@v1
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
-        run: |
-          git for-each-ref ${{ github.ref }} --format='%(contents)'
+        #run: |
+        #  git for-each-ref ${{ github.ref }} --format='%(contents)'
       - name: Dump step
         run: echo "${{ toJSON(steps) }}"
