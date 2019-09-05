@@ -11,6 +11,7 @@ jobs:
       - name: Script
         uses: actions/github-script@master
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const { spawnSync } = require('child_process');
             spawnSync('git', ['for-each-ref', '${{ github.ref }}', '--format=%(contents)']);
