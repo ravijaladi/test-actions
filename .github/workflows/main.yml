@@ -9,3 +9,7 @@ jobs:
       - name: Dump event
         run: |
           echo "${{ toJSON(github) }}"
+      - name: Extract tag
+        if: github.event_name == 'push' && github.event.ref_type == 'tag'
+        run: |
+          git for-each-ref ${{ github.event.ref }} --format='%(contents)'
