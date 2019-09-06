@@ -8,6 +8,14 @@ jobs:
     steps:
       - name: Dump github
         run: echo "${{ toJSON(github) }}"
+      - name: Dump context
+        uses: actions/github-script@0.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            return context;
+      - name: Dump step
+        run: echo "${{ toJSON(steps) }}"
       - name: Script
         uses: actions/github-script@0.2.0
         with:
