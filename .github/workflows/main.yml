@@ -19,10 +19,10 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const { data { message } } = await github.git.getTag({
-                owner: context.payload.repository.owner.name,
-                repo: context.payload.repository.name,
-                tag_sha: context.payload.after
+            const { data: { message } } = await github.git.getTag({
+              owner: context.payload.repository.owner.name,
+              repo: context.payload.repository.name,
+              tag_sha: context.payload.after
             });
             return message;
         #uses: rectalogic/notify-irc@v1
