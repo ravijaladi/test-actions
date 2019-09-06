@@ -24,7 +24,7 @@ jobs:
             return github.git.getTag({
                 owner: context.payload.repository.owner.name,
                 repo: context.payload.repository.name,
-                tag_sha: context.sha
+                tag_sha: context.payload.after
             });
         #uses: rectalogic/notify-irc@v1
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
