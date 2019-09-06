@@ -20,12 +20,12 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             (async () => {
-                const { data: message } = await github.git.getTag({
+                const { message } = await github.git.getTag({
                     owner: context.payload.repository.owner.name,
                     repo: context.payload.repository.name,
                     tag_sha: context.payload.after
                 });
-                return data;
+                return message;
             })
         #uses: rectalogic/notify-irc@v1
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
