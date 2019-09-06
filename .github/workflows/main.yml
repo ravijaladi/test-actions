@@ -14,8 +14,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             return context;
-      - name: Dump step
-        run: echo "${{ toJSON(steps) }}"
       - name: Script
         uses: actions/github-script@0.2.0
         with:
@@ -25,7 +23,7 @@ jobs:
                 owner: context.payload.repository.owner.name,
                 repo: context.payload.repository.name,
                 tag_sha: context.payload.after
-            });
+            }).message;
         #uses: rectalogic/notify-irc@v1
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
         #run: |
