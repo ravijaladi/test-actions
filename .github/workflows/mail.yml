@@ -1,0 +1,15 @@
+name: emailtest
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Email
+        run: |
+          echo cureatr.com > /etc/mailname
+          apt install -y postfix
+          echo "relayhost = smtp-relay.gmail.com:25" >> /etc/postfix/main.cf
+          systemctl restart postfix
+          echo "Test mail from postfix" | mail -s "Test Postfix" -r "ops+test@cureatr.com" ops+test@example.com
