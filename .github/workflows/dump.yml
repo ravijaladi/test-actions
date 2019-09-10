@@ -1,5 +1,7 @@
 name: dump
 
+on: [push, create, label]
+
 jobs:
   test:
     runs-on: ubuntu-18.04
