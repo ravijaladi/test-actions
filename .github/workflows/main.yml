@@ -1,20 +1,14 @@
 name: testing
 
-on: [push]
+on:
+  create:
+    ref_type: tag
 
 jobs:
   test:
     runs-on: ubuntu-18.04
     steps:
-      - name: Dump github
-        run: echo "${{ toJSON(github) }}"
-      - name: Dump context
-        uses: actions/github-script@0.2.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            return context;
-      - name: Script
+      - name: Extract tag message
         uses: actions/github-script@0.2.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -25,9 +19,6 @@ jobs:
               tag_sha: context.payload.after
             });
             return message;
-        #uses: rectalogic/notify-irc@v1
-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
-        #run: |
-        #  git for-each-ref ${{ github.ref }} --format='%(contents)'
-      - name: Dump step
+          #if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+      - name: Dump steps
         run: echo "${{ toJSON(steps) }}"
