@@ -8,6 +8,8 @@ jobs:
   test:
     runs-on: ubuntu-18.04
     steps:
+      - name: Dump
+        run: echo "${{ toJSON(github) }}"
       - name: Extract tag message
         uses: actions/github-script@0.2.0
         with:
