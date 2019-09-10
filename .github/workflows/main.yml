@@ -1,8 +1,8 @@
 name: testing
 
 on:
-  create:
-    ref_type: tag
+  push:
+    ref: refs/tags/*
 
 jobs:
   test:
@@ -17,7 +17,7 @@ jobs:
           # Get the sha of the tag object itself (git show-ref -d <TAG>)
           script: |
             const { data: { message } } = await github.git.getTag({
-              owner: context.payload.repository.owner.login,
+              owner: context.payload.repository.owner.name,
               repo: context.payload.repository.name,
               tag_sha: context.payload.after
             });
