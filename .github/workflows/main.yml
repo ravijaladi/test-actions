@@ -14,9 +14,10 @@ jobs:
         uses: actions/github-script@0.2.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          # Get the sha of the tag object itself (git show-ref -d <TAG>)
           script: |
             const { data: { message } } = await github.git.getTag({
-              owner: context.payload.repository.owner.name,
+              owner: context.payload.repository.owner.login,
               repo: context.payload.repository.name,
               tag_sha: context.payload.after
             });
