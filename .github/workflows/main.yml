@@ -10,9 +10,11 @@ jobs:
     steps:
       - name: Dump
         run: echo "${{ toJSON(github) }}"
+        if: github.event.created
       - name: Extract tag message
         id: tag
         uses: actions/github-script@0.2.0
+        if: github.event.created
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           # Get the sha of the tag object itself (git show-ref -d <TAG>)
@@ -23,6 +25,6 @@ jobs:
               tag_sha: context.payload.after
             });
             return message.replace('\n', ' ');
-          if: github.event.created
       - name: Dump steps
+        if: github.event.created
         run: echo "${{ toJSON(steps) }}"
