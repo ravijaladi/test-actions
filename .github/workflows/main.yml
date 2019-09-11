@@ -3,6 +3,8 @@ name: testing
 on:
   push:
     ref: refs/tags/*
+    event:
+      created: true
 
 jobs:
   test:
