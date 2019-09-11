@@ -24,7 +24,7 @@ jobs:
               repo: context.payload.repository.name,
               tag_sha: context.payload.after
             });
-            return message.replace('\n', ' ');
+            return message.replace(/(?:\r\n|\r|\n)/g, ' ');
       - name: Dump steps
         if: github.event.created
         run: echo "${{ toJSON(steps) }}"
