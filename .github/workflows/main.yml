@@ -11,6 +11,7 @@ jobs:
       - name: Dump
         run: echo "${{ toJSON(github) }}"
       - name: Extract tag message
+        id: tag
         uses: actions/github-script@0.2.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
