@@ -28,3 +28,5 @@ jobs:
       - name: Dump steps
         if: github.event.created
         run: echo "${{ toJSON(steps) }}"
+      - name: Fail
+        run: exit 1
