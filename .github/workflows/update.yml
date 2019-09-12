@@ -1,0 +1,10 @@
+name: Update Workflow
+
+on: [update]
+
+jobs:
+  test:
+    runs-on: ubuntu-18.04
+    steps:
+      - run: |
+          echo ${{ github }}
