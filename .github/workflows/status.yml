@@ -1,9 +1,9 @@
-name: Update Workflow
+name: Status Workflow
 
-on: [update]
+on: [status]
 
 jobs:
-  test:
+  status:
     runs-on: ubuntu-18.04
     steps:
       - run: |
