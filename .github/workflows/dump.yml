@@ -1,9 +1,9 @@
 name: dump
 
-on: [push, create, label]
+on: [push, create, label, status]
 
 jobs:
-  test:
+  dump:
     runs-on: ubuntu-18.04
     steps:
       - name: Dump
