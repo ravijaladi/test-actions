@@ -1,6 +1,10 @@
 name: dump
 
-on: [push, create, label, status]
+#on: [push, create, label, status]
+on:
+  push:
+    tags:
+      - '*'
 
 jobs:
   dump:
