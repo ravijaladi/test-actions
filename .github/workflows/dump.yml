@@ -1,0 +1,13 @@
+name: dump
+
+on: [push, create, label, status]
+
+jobs:
+  dump:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Dump
+        run: |
+          cat > /dev/null << "EOF"
+          ${{ toJSON(github) }}
+          EOF

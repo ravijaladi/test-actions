@@ -1,0 +1,17 @@
+name: IRC notify
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: IRC notify
+        uses: rectalogic/notify-irc@notify
+        with:
+          channel: "#cureatr"
+          channel_key: ${{ secrets.CUREATR_IRC_CHANNEL_PASSWORD }}
+          nickname: cureatr-irc
+          sasl_password: ${{ secrets.CUREATR_IRC_NICK_PASSWORD }}
+          message: Testing NOTIFY
+          notice: true

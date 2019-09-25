@@ -1,0 +1,32 @@
+name: testing
+
+on:
+  push:
+    ref: refs/tags/*
+
+jobs:
+  test:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Dump
+        run: echo "${{ toJSON(github) }}"
+        if: github.event.created
+      - name: Extract tag message
+        id: tag
+        uses: actions/github-script@0.2.0
+        if: github.event.created
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # Get the sha of the tag object itself (git show-ref -d <TAG>)
+          script: |
+            const { data: { message } } = await github.git.getTag({
+              owner: context.payload.repository.owner.name,
+              repo: context.payload.repository.name,
+              tag_sha: context.payload.after
+            });
+            return message.replace(/(?:\r\n|\r|\n)/g, ' ');
+      - name: Dump steps
+        if: github.event.created
+        run: echo "${{ toJSON(steps) }}"
+      - name: Fail
+        run: exit 1
