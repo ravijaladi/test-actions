@@ -11,3 +11,4 @@ jobs:
           cat > /dev/null << "EOF"
           ${{ toJSON(github) }}
           EOF
+          env
