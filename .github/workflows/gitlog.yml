@@ -11,7 +11,6 @@ jobs:
       # Diff the diffs https://stackoverflow.com/a/9302664/1480205
       - name: Dump PR
         run: |
-          git fetch --no-auto-gc origin ${{ github.event.pull_request.base.sha }} ${{ github.event.after }}
           echo "Changes to PR"
           diff <(curl ${{ github.event.pull_request.base.sha }}..${{ github.event.after }}.diff) <(curl ${{ github.event.pull_request.base.sha }}..${{ github.event.before }}.diff)
           echo "Dump github object"
