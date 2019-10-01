@@ -1,14 +1,14 @@
-name: dump
+name: dump PR
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   dump:
     runs-on: ubuntu-18.04
     steps:
-      - name: Dump
+      - name: Dump PR
         run: |
-          cat > /dev/null << "EOF"
+          cat << "EOF"
           ${{ toJSON(github) }}
           EOF
           env
