@@ -1,6 +1,8 @@
 name: dump PR
 
-on: [pull_request]
+on:
+  pull_request:
+    types: [synchronize]
 
 jobs:
   dump:
@@ -8,6 +10,8 @@ jobs:
     steps:
       - name: Dump PR
         run: |
+          echo "Changes to PR"
+          diff <(git log ${{ github.event.pull_request.base.sha }}..${{ github.event.after }} -p) <(git log ${{ github.event.pull_request.base.sha }}..${{ github.event.before }} -p)
           cat << "EOF"
           ${{ toJSON(github) }}
           EOF
