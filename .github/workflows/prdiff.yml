@@ -5,7 +5,7 @@ on:
     types: [synchronize]
 
 jobs:
-  dump:
+  prdiff:
     runs-on: ubuntu-18.04
     steps:
       - name: Diff PR diffs
@@ -20,7 +20,8 @@ jobs:
           # Diff the diffs https://stackoverflow.com/a/9302664/1480205
           DIFF=$(diff \
             <(curldiff ${{ github.event.pull_request.base.sha }}...${{ github.event.before }}) \
-            <(curldiff ${{ github.event.pull_request.base.sha }}...${{ github.event.after }}))
+            <(curldiff ${{ github.event.pull_request.base.sha }}...${{ github.event.after }}) \
+            || true)
           echo ::set-output name=diffcode::$?
           echo ::set-output name=diff::${DIFF}
       - name: Dismiss stale reviews
