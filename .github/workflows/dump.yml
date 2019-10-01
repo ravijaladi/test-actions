@@ -8,6 +8,8 @@ jobs:
   dump:
     runs-on: ubuntu-18.04
     steps:
+      - name: Checkout
+        uses: actions/checkout@v1
       - name: Dump PR
         run: |
           echo "Changes to PR"
