@@ -17,11 +17,11 @@ jobs:
             <(curl \
                 -H "Accept: application/vnd.github.VERSION.diff" \
                 -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                ${compare_url}/${{ github.event.pull_request.base.sha }}..${{ github.event.after }}) \
+                ${compare_url}/${{ github.event.pull_request.base.sha }}...${{ github.event.after }}) \
             <(curl \
                 -H "Accept: application/vnd.github.VERSION.diff" \
                 -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                ${compare_url}/${{ github.event.pull_request.base.sha }}..${{ github.event.before }})
+                ${compare_url}/${{ github.event.pull_request.base.sha }}...${{ github.event.before }})
 
           echo "Dump github object"
           cat << "EOF"
