@@ -1,4 +1,4 @@
-name: Check if PR push introduced changes
+name: Dismiss stale PR reviews
 
 on:
   pull_request:
