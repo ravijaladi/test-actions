@@ -13,8 +13,9 @@ jobs:
       # Diff the diffs https://stackoverflow.com/a/9302664/1480205
       - name: Dump PR
         run: |
+          git remote -v
+          git fetch --no-auto-gc origin ${{ github.event.pull_request.base.sha }} ${{ github.event.after }} ${{ github.event.before }}
           #git fetch --no-auto-gc --negotiation-tip=${{ github.event.pull_request.base.sha }} --negotiation-tip=${{ github.event.after }} --negotiation-tip=${{ github.event.before }}
-          git fetch --no-auto-gc ${{ github.event.pull_request.base.sha }} ${{ github.event.after }} ${{ github.event.before }}
           echo "Changes to PR"
           diff <(git log ${{ github.event.pull_request.base.sha }}..${{ github.event.after }} -p) <(git log ${{ github.event.pull_request.base.sha }}..${{ github.event.before }} -p)
           cat << "EOF"
