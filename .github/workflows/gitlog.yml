@@ -13,7 +13,7 @@ jobs:
         run: |
           echo "Changes to PR"
           compare_url=${{ github.event.repository.compare_url }}
-          diff <(curl --silent ${compare_url/{base}...{head}/${{ github.event.pull_request.base.sha }}..${{ github.event.after }}.diff}) <(curl --silent ${compare_url/{base}...{head}/${{ github.event.pull_request.base.sha }}..${{ github.event.before }}.diff})
+          diff <(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" --silent ${compare_url/{base}...{head}/${{ github.event.pull_request.base.sha }}..${{ github.event.after }}.diff}) <(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" --silent ${compare_url/{base}...{head}/${{ github.event.pull_request.base.sha }}..${{ github.event.before }}.diff})
           echo "Dump github object"
           cat << "EOF"
           ${{ toJSON(github) }}
