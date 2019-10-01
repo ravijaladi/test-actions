@@ -12,7 +12,8 @@ jobs:
       - name: Dump PR
         run: |
           echo "Changes to PR"
-          diff <(curl ${{ github.event.pull_request.base.sha }}..${{ github.event.after }}.diff) <(curl ${{ github.event.pull_request.base.sha }}..${{ github.event.before }}.diff)
+          compare_url=${{ github.repository.compare_url }}
+          diff <(curl ${compare_url/{base}...{head}/${{ github.event.pull_request.base.sha }}..${{ github.event.after }}.diff}) <(curl ${compare_url/{base}...{head}/${{ github.event.pull_request.base.sha }}..${{ github.event.before }}.diff})
           echo "Dump github object"
           cat << "EOF"
           ${{ toJSON(github) }}
