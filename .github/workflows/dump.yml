@@ -12,6 +12,7 @@ jobs:
         uses: actions/checkout@v1
       - name: Dump PR
         run: |
+          git fetch --negotiation-tip=${{ github.event.pull_request.base.sha }} --negotiation-tip=${{ github.event.after }} --negotiation-tip=${{ github.event.before }}
           echo "Changes to PR"
           diff <(git log ${{ github.event.pull_request.base.sha }}..${{ github.event.after }} -p) <(git log ${{ github.event.pull_request.base.sha }}..${{ github.event.before }} -p)
           cat << "EOF"
