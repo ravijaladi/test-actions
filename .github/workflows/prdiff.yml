@@ -1,0 +1,50 @@
+name: Check if PR push introduced changes
+
+on:
+  pull_request:
+    types: [synchronize]
+
+jobs:
+  dump:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Diff PR diffs
+        id: diff
+        run: |
+          curldiff() {
+            curl --silent \
+              -H "Accept: application/vnd.github.VERSION.diff" \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              https://api.github.com/repos/${{ github.repository }}/compare/$1
+          }
+          # Diff the diffs https://stackoverflow.com/a/9302664/1480205
+          DIFF=$(diff \
+            <(curldiff ${{ github.event.pull_request.base.sha }}...${{ github.event.before }}) \
+            <(curldiff ${{ github.event.pull_request.base.sha }}...${{ github.event.after }}))
+          echo ::set-output name=diffcode::$?
+          echo ::set-output name=diff::${DIFF}
+      - name: Dismiss stale reviews
+        uses: actions/github-script@0.2.0
+        if: steps.diff.outputs.diffcode != 0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            // Dismiss any approved reviews of this PR if this push introduced changes
+            const options = await github.pulls.listReviews.endpoint.merge({
+              owner: context.payload.repository.owner.name,
+              repo: context.payload.repository.name,
+              pull_number: context.payload.number
+            });
+            for await (const chunk of github.paginate.iterator(options)) {
+              for (const review of chunk.data) {
+                if (review.state == 'APPROVED') {
+                  await github.pulls.dismissReview({
+                    owner: context.payload.repository.owner.name,
+                    repo: context.payload.repository.name,
+                    pull_number: context.payload.number,
+                    review_id: review.id,
+                    message: steps.diff.outputs.diff
+                  });
+                }
+              }
+            }
