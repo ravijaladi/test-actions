@@ -8,16 +8,13 @@ jobs:
   dump:
     runs-on: ubuntu-18.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-        with:
-          ref: ${{ github.event.before }}
       # Diff the diffs https://stackoverflow.com/a/9302664/1480205
       - name: Dump PR
         run: |
           git fetch --no-auto-gc origin ${{ github.event.pull_request.base.sha }} ${{ github.event.after }}
           echo "Changes to PR"
-          diff <(git log ${{ github.event.pull_request.base.sha }}..${{ github.event.after }} -p) <(git log ${{ github.event.pull_request.base.sha }}..${{ github.event.before }} -p)
+          diff <(curl ${{ github.event.pull_request.base.sha }}..${{ github.event.after }}.diff) <(curl ${{ github.event.pull_request.base.sha }}..${{ github.event.before }}.diff)
+          echo "Dump github object"
           cat << "EOF"
           ${{ toJSON(github) }}
           EOF

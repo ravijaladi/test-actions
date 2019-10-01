@@ -1,0 +1,33 @@
+name: dump PR
+
+on:
+  pull_request:
+    types: [synchronize]
+
+jobs:
+  dump:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Diff PR
+        uses: actions/github-script@0.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const { data: { message } } = await github.repos.compareCommits({
+            owner: context.payload.repository.owner.name,
+            repo: context.payload.repository.name,
+            base: context.payload.pull_request.base.sha,
+            head: context.payload.before,
+            mediaType: {
+              format: "diff"
+            }
+          });
+          const { data: { message } } = await github.repos.compareCommits({
+            owner: context.payload.repository.owner.name,
+            repo: context.payload.repository.name,
+            base: context.payload.pull_request.base.sha,
+            head: context.payload.after,
+            mediaType: {
+              format: "diff"
+            }
+          });
