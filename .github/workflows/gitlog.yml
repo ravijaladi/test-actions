@@ -16,10 +16,11 @@ jobs:
           curl='curl --silent -H "Accept: application/vnd.github.VERSION.diff" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}"'
           diff \
             <($curl ${compare_url}/${{ github.event.pull_request.base.sha }}...${{ github.event.after }}) \
-            <($curl ${compare_url}/${{ github.event.pull_request.base.sha }}...${{ github.event.before }})
+            <($curl ${compare_url}/${{ github.event.pull_request.base.sha }}...${{ github.event.before }}) || true
 
           echo "Dump github object"
           cat << "EOF"
           ${{ toJSON(github) }}
           EOF
           env
+
