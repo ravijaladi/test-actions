@@ -1,0 +1,14 @@
+name: Dismiss stale PR reviews
+
+on:
+  pull_request:
+    types: [synchronize]
+
+jobs:
+  prdiff:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Diff PR diffs
+        uses: rectalogic/test-actions/.github/actions/stale-pr@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
