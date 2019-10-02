@@ -21,8 +21,6 @@ async function main() {
     }
     const client = new GitHub(token, opts);
 
-    console.log('repository', context.payload.repository); //XXX
-    console.log('owner', context.payload.repository.owner); //XXX
     const beforeDiff = await client.repos.compareCommits({
         owner: context.payload.repository.owner.login,
         repo: context.payload.repository.name,
@@ -41,6 +39,8 @@ async function main() {
             format: 'diff'
         }
     });
+    console.log("beforeDiff", beforeDiff); //XXX
+    console.log("afterDiff", afterDiff); //XXX
     if (beforeDiff == afterDiff) {
         return;
     }
