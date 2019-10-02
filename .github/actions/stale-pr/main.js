@@ -48,7 +48,7 @@ async function main() {
 
     // Dismiss any approved reviews of this PR if this push introduced changes
     const options = client.pulls.listReviews.endpoint.merge({
-        owner: context.payload.repository.owner.name,
+        owner: context.payload.repository.owner.login,
         repo: context.payload.repository.name,
         pull_number: context.payload.number
     });
@@ -56,7 +56,7 @@ async function main() {
         for (const review of chunk.data) {
             if (review.state == 'APPROVED') {
                 await client.pulls.dismissReview({
-                    owner: context.payload.repository.owner.name,
+                    owner: context.payload.repository.owner.login,
                     repo: context.payload.repository.name,
                     pull_number: context.payload.number,
                     review_id: review.id,
