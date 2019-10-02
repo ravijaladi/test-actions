@@ -9,11 +9,16 @@ main().catch(handleError)
 async function main() {
     // This action only works on pull_request synchronized events
     if (context.payload.event_name != 'pull_request' || context.payload.action != 'synchronize') {
-        console.warn('This action requires a pull_request synchronize event');
+        console.warn('This action requires a pull_request synchronize event', context);
         return;
     }
     const token = core.getInput('github-token', {required: true});
-    const client = new GitHub(token)
+    const debug = core.getInput('debug');
+    const opts = {};
+    if (debug === 'true') {
+        opts.log = console;
+    }
+    const client = new GitHub(token, opts);
 
     const beforeDiff = await client.repos.compareCommits({
         owner: context.payload.repository.owner.name,
