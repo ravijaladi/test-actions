@@ -1,3 +1,4 @@
+const util = require('util');
 const core = require('@actions/core')
 const {GitHub, context} = require('@actions/github')
 const jsdiff = require('diff')
@@ -21,7 +22,7 @@ async function main() {
     }
     const client = new GitHub(token, opts);
 
-    const beforeDiff = await client.repos.compareCommits({
+    const { data: beforeDiff } = await client.repos.compareCommits({
         owner: context.payload.repository.owner.login,
         repo: context.payload.repository.name,
         base: context.payload.pull_request.base.sha,
@@ -30,7 +31,7 @@ async function main() {
             format: 'diff'
         }
     });
-    const afterDiff = await client.repos.compareCommits({
+    const { data: afterDiff } = await client.repos.compareCommits({
         owner: context.payload.repository.owner.login,
         repo: context.payload.repository.name,
         base: context.payload.pull_request.base.sha,
@@ -40,11 +41,11 @@ async function main() {
         }
     });
 
-    if (beforeDiff.data == afterDiff.data) {
-        console.log("Diffs are identical, skipping review dismissal");
+    if (beforeDiff == afterDiff) {
+        console.log('Diffs are identical, skipping review dismissal');
         return;
     }
-    const diffDiff = jsdiff.createTwoFilesPatch('before-patch', 'after-patch', beforeDiff.data, afterDiff.data);
+    const diffDiff = jsdiff.createTwoFilesPatch('before-patch', 'after-patch', beforeDiff, afterDiff, '', '', { context: 0 });
 
     // Dismiss any approved reviews of this PR if this push introduced changes
     const options = client.pulls.listReviews.endpoint.merge({
@@ -55,12 +56,13 @@ async function main() {
     for await (const chunk of client.paginate.iterator(options)) {
         for (const review of chunk.data) {
             if (review.state == 'APPROVED') {
+                console.log('Dismissing review %d', review.id);
                 await client.pulls.dismissReview({
                     owner: context.payload.repository.owner.login,
                     repo: context.payload.repository.name,
                     pull_number: context.payload.number,
                     review_id: review.id,
-                    message: diffDiff
+                    message: util.format('```diff\n%s\n```', diffDiff)
                 });
             }
         }
