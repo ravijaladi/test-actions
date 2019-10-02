@@ -39,15 +39,14 @@ async function main() {
             format: 'diff'
         }
     });
-    console.log("beforeDiff", beforeDiff); //XXX
-    console.log("afterDiff", afterDiff); //XXX
-    if (beforeDiff == afterDiff) {
+
+    if (beforeDiff.data == afterDiff.data) {
         return;
     }
-    const diffDiff = jsdiff.createTwoFilesPatch('before-patch', 'after-patch', beforeDiff, afterDiff);
+    const diffDiff = jsdiff.createTwoFilesPatch('before-patch', 'after-patch', beforeDiff.data, afterDiff.data);
 
     // Dismiss any approved reviews of this PR if this push introduced changes
-    const options = await client.pulls.listReviews.endpoint.merge({
+    const options = client.pulls.listReviews.endpoint.merge({
         owner: context.payload.repository.owner.name,
         repo: context.payload.repository.name,
         pull_number: context.payload.number
