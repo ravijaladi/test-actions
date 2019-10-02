@@ -21,7 +21,8 @@ async function main() {
     }
     const client = new GitHub(token, opts);
 
-    console.log(context.payload.repository.owner); //XXX
+    console.log('repository', context.payload.repository); //XXX
+    console.log('owner', context.payload.repository.owner); //XXX
     const beforeDiff = await client.repos.compareCommits({
         owner: context.payload.repository.owner.name,
         repo: context.payload.repository.name,
