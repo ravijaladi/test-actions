@@ -41,6 +41,7 @@ async function main() {
     });
 
     if (beforeDiff.data == afterDiff.data) {
+        console.log("Diffs are identical, skipping review dismissal");
         return;
     }
     const diffDiff = jsdiff.createTwoFilesPatch('before-patch', 'after-patch', beforeDiff.data, afterDiff.data);
