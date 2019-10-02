@@ -24,7 +24,7 @@ async function main() {
     console.log('repository', context.payload.repository); //XXX
     console.log('owner', context.payload.repository.owner); //XXX
     const beforeDiff = await client.repos.compareCommits({
-        owner: context.payload.repository.owner.name,
+        owner: context.payload.repository.owner.login,
         repo: context.payload.repository.name,
         base: context.payload.pull_request.base.sha,
         head: context.payload.before,
@@ -33,7 +33,7 @@ async function main() {
         }
     });
     const afterDiff = await client.repos.compareCommits({
-        owner: context.payload.repository.owner.name,
+        owner: context.payload.repository.owner.login,
         repo: context.payload.repository.name,
         base: context.payload.pull_request.base.sha,
         head: context.payload.after,
