@@ -62,7 +62,7 @@ async function main() {
                     repo: context.payload.repository.name,
                     pull_number: context.payload.number,
                     review_id: review.id,
-                    message: util.format('```diff\n%s\n```', diffDiff)
+                    message: util.format('PR has new changes, this review is stale. Diff of diffs:\n```diff\n%s\n```', diffDiff)
                 });
             }
         }
