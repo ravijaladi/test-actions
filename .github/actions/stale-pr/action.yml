@@ -1,6 +1,5 @@
 name: StalePR
 description: 'Dismiss stale PR reviews'
-inputs:
 inputs: 
   github-token:
     description: 'The GITHUB_TOKEN secret'
