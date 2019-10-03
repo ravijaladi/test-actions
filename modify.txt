@@ -5,6 +5,7 @@ notice
 change on branch
 change on master
 stuff on branch
+here
 added on master
 changed in rebased PR
 PR
@@ -14,6 +15,7 @@ change on PR
 more PR changes
 modify on PR
 more PR mods
+and here
 and more PR
 make it stale!
 stalerrr
