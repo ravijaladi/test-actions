@@ -49,9 +49,10 @@ async function main() {
         console.log('Diffs are identical, skipping review dismissal');
         return;
     }
-    console.log('beforeDiff', beforeDiff);
-    console.log('afterDiff', afterDiff);
+    console.log('beforeDiff\n', beforeDiff);
+    console.log('afterDiff\n', afterDiff);
     const diffDiff = jsdiff.createTwoFilesPatch('before-patch', 'after-patch', beforeDiff, afterDiff, '', '', { context: 0 });
+    console.log('diffDiff\n', diffDiff);
 
     // Dismiss any approved reviews of this PR if this push introduced changes
     const options = client.pulls.listReviews.endpoint.merge({
