@@ -49,6 +49,8 @@ async function main() {
         console.log('Diffs are identical, skipping review dismissal');
         return;
     }
+    console.log('beforeDiff', beforeDiff);
+    console.log('afterDiff', afterDiff);
     const diffDiff = jsdiff.createTwoFilesPatch('before-patch', 'after-patch', beforeDiff, afterDiff, '', '', { context: 0 });
 
     // Dismiss any approved reviews of this PR if this push introduced changes
