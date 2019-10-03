@@ -52,9 +52,7 @@ async function main() {
     console.log('beforeDiff\n', beforeDiff);
     console.log('afterDiff\n', afterDiff);
     // Escape each line so it doesn't confuse the final diff colorization
-    beforeDiff = beforeDiff.replace(/^/gm, "|");
-    afterDiff = afterDiff.replace(/^/gm, "|");
-    const diffDiff = jsdiff.createTwoFilesPatch('before-patch', 'after-patch', beforeDiff, afterDiff, '', '', { context: 0 });
+    const diffDiff = jsdiff.createTwoFilesPatch('before-patch', 'after-patch', beforeDiff.replace(/^/gm, "|"), afterDiff.replace(/^/gm, "|"), '', '', { context: 0 });
     console.log('diffDiff\n', diffDiff);
 
     // Dismiss any approved reviews of this PR if this push introduced changes
