@@ -1,6 +1,6 @@
 name: dump check
 
-on: [check_run]
+on: [check_run, check_suite]
 
 jobs:
   dump:
