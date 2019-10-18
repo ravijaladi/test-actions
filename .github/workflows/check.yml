@@ -1,0 +1,10 @@
+name: dump check
+
+on: [check_run]
+
+jobs:
+  dump:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Dump check
+        run: echo "${{ toJSON(github) }}"

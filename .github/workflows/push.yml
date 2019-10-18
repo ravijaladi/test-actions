@@ -1,0 +1,10 @@
+name: dump push
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Dump push
+        run: echo "${{ toJSON(github) }}"
